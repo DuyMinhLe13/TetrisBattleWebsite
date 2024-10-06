@@ -182,7 +182,7 @@ def generate_game(link1, link2, link, player1_id, player2_id):
         file.write('agent1 = agent1.Agent.Agent(\'\')\n')
         file.write('agent2 = agent2.Agent.Agent(\'\')\n')
         file.write('sys.path.append(\'' + current_path + '\')\n')
-        # file.write('sys.path.append(\'' + current_path.replace('\\', '\\\\') + '\')\n')
+        # file.write('sys.path.append(\'' + current_path.replace('\\', '\\\\') + '\')\n') Uncomment this line for Windows
         file.write('from VideoRender import VideoRender\n')
         file.write('videorender =  VideoRender()\n')
         if player2_id != 0:
