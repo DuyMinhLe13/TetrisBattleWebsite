@@ -1,0 +1,11 @@
+pandas
+numpy
+gym
+pygame
+Django==5.0.7
+setuptools
+gunicorn
+opencv-python
+opencv-contrib-python-headless
+ffmpeg
+requests

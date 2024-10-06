@@ -1,0 +1,2 @@
+- Thêm user vào video kết quả
+- Tài khoản ban tổ chức

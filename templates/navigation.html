@@ -1,0 +1,41 @@
+<ul>
+    {% if not updating %}
+        <li><a class="text-decoration-underline" href="/">Home</a></li>
+        <li><a class="text-decoration-underline" href="/scoreboard/">Scoreboard</a></li>
+        {% if request.user.is_staff %}
+            <li><a class="text-decoration-underline" href="/compete/tournament">Tournament</a></li>
+        {% endif %}
+        {% if not request.user.is_staff %}
+            <li><a class="text-decoration-underline" href="/compete/">Compete</a></li>
+        {% endif %}
+        <li><a class="text-decoration-underline" href="/about/">About</a></li>
+        <li><a class="text-decoration-underline" href="/contest_rules/">Contest Rules</a></li>
+        {% if not request.user.is_authenticated %}
+            <li><a class="text-decoration-underline" href="/login">Login</a></li>
+            <li><a class="text-decoration-underline" href="/register">Register</a></li>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+            <li><a class="text-decoration-underline" href="/accounts/profile">Profile</a></li>
+            <li><a class="text-decoration-underline" href="/logout">Logout</a></li>
+        {% endif %}
+    {% endif %}
+    {% if updating %}
+        <li><a class="text-decoration-underline" href="/">Home</a></li>
+        <li><a class="text-decoration-underline" href="/">Scoreboard</a></li>
+        {% if request.user.is_staff %}
+            <li><a class="text-decoration-underline" href="/">Tournament</a></li>
+        {% endif %}
+        {% if not request.user.is_staff %}
+            <li><a class="text-decoration-underline" href="/">Compete</a></li>
+        {% endif %}
+        <li><a class="text-decoration-underline" href="/">About</a></li>
+        <li><a class="text-decoration-underline" href="/contest_rules/">Contest Rules</a></li>
+        {% if not request.user.is_authenticated %}
+            <li><a class="text-decoration-underline" href="/">Login</a></li>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+            <li><a class="text-decoration-underline" href="/">Profile</a></li>
+            <li><a class="text-decoration-underline" href="/">Logout</a></li>
+        {% endif %}
+    {% endif %}
+</ul>
