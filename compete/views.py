@@ -191,7 +191,7 @@ def generate_game(link1, link2, link, player1_id, player2_id):
         else:
             file.write(f"videorender.render(agent1=agent1, agent2=agent2, link=\'" + video_path.replace('\\', '\\\\') + '\', fps=24)\n')
 
-    os.system('python3 ' + file_path)
+    os.system('python ' + file_path)
 
     return video_path
 
