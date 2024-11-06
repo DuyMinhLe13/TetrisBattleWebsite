@@ -175,25 +175,30 @@ def generate_game(link1, link2, link, player1_id, player2_id):
     video_path = os.path.join(link, 'outpy.webm')
 
     with open(file_path, 'w') as file:
-        file.write('print(\'Hello!\')\n')
         file.write('import sys\n')
-        file.write('import agent1.Agent\n')
-        file.write('import agent2.Agent\n')
-        file.write('agent1 = agent1.Agent.Agent(\'\')\n')
-        file.write('agent2 = agent2.Agent.Agent(\'\')\n')
-        file.write('sys.path.append(\'' + current_path + '\')\n')
+        file.write('import traceback\n')
+        file.write('try:\n')
+        file.write('    import agent1.Agent\n')
+        file.write('    import agent2.Agent\n')
+        file.write('    agent1 = agent1.Agent.Agent(\'\')\n')
+        file.write('    agent2 = agent2.Agent.Agent(\'\')\n')
+        file.write('    sys.path.append(\'' + current_path + '\')\n')
         if os.name == 'nt':
-            file.write('sys.path.append(\'' + current_path.replace('\\', '\\\\') + '\')\n')
-        file.write('from VideoRender import VideoRender\n')
-        file.write('videorender =  VideoRender()\n')
+            file.write('    sys.path.append(\'' + current_path.replace('\\', '\\\\') + '\')\n')
+        # file.write('sys.path.append(\'' + current_path.replace('\\', '\\\\') + '\')\n')
+        file.write('    from VideoRender import VideoRender\n')
+        file.write('    videorender =  VideoRender()\n')
         if player2_id != 0:
-            file.write(f"videorender.render(agent1=agent1, agent2=agent2, agent1_name='{User.objects.get(id=player1_id).username}', agent2_name='{User.objects.get(id=player2_id).username}', link=\'" + video_path.replace('\\', '\\\\') + '\', fps=24)\n')
+            file.write(f"    videorender.render(agent1=agent1, agent2=agent2, agent1_name='{User.objects.get(id=player1_id).username}', agent2_name='{User.objects.get(id=player2_id).username}', link=\'" + video_path.replace('\\', '\\\\') + '\', fps=24)\n')
         else:
-            file.write(f"videorender.render(agent1=agent1, agent2=agent2, link=\'" + video_path.replace('\\', '\\\\') + '\', fps=24)\n')
+            file.write(f"    videorender.render(agent1=agent1, agent2=agent2, link=\'" + video_path.replace('\\', '\\\\') + '\', fps=24)\n')
+        file.write('except Exception as error_msg:\n')
+        file.write('    var = traceback.format_exc()\n')
+        file.write('    print(var)\n')
 
-    os.system('python ' + file_path)
+    output_msg = os.popen('python3 ' + file_path).read()
 
-    return video_path
+    return video_path, output_msg
 
 @csrf_exempt
 def watch(request):
@@ -228,7 +233,7 @@ def watch(request):
     link = link.replace('\\', '/')
     if not os.path.exists(link):
         os.makedirs(link)
-    video_link = generate_game(link1, link2, link, player1_id, player2_id)
+    video_link, output_msg = generate_game(link1, link2, link, player1_id, player2_id)
     # # result_queue = queue.Queue()
     # my_thread = threading.Thread(target=generate_game, args=(link1, link2, link, player1_id, player2_id))
     # my_thread.start()
@@ -284,7 +289,7 @@ def watch(request):
                 
     except FileNotFoundError:
         print(f"File '{result_link}' not found.")
-    context = {'link': video_link, 'message': message, 'message2' : message2}
+    context = {'link': video_link, 'message': message, 'message2' : message2, 'output_msg': output_msg}
     return render(request, 'compete/watch.html', context=context)
 
 def calculate_elo(id_win, id_lose):
