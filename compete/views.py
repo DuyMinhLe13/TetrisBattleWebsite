@@ -196,7 +196,7 @@ def generate_game(link1, link2, link, player1_id, player2_id):
         file.write('    var = traceback.format_exc()\n')
         file.write('    print(var)\n')
 
-    output_msg = os.popen('python3 ' + file_path).read()
+    output_msg = os.popen('python ' + file_path).read()
 
     return video_path, output_msg
 
