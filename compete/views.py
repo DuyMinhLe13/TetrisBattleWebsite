@@ -182,9 +182,9 @@ def generate_game(link1, link2, link, player1_id, player2_id):
         file.write('    import agent2.Agent\n')
         file.write('    agent1 = agent1.Agent.Agent(\'\')\n')
         file.write('    agent2 = agent2.Agent.Agent(\'\')\n')
-        file.write('    sys.path.append(\'' + current_path + '\')\n')
+        file.write('    sys.path.append(r\'' + current_path + '\')\n')
         if os.name == 'nt':
-            file.write('    sys.path.append(\'' + current_path.replace('\\', '\\\\') + '\')\n')
+            file.write('    sys.path.append(r\'' + current_path.replace('\\', '\\\\') + '\')\n')
         # file.write('sys.path.append(\'' + current_path.replace('\\', '\\\\') + '\')\n')
         file.write('    from VideoRender import VideoRender\n')
         file.write('    videorender =  VideoRender()\n')
